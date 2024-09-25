@@ -1,0 +1,108 @@
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Hero Section */
+.hero {
+  background-image: url('https://plus.unsplash.com/premium_photo-1666492186040-bc58aff3fc29?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); 
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  text-align: center;
+  padding: 120px 20px;
+  position: relative;
+  filter: brightness(80%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.hero-subtitle {
+  font-size: 1.75rem;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.btn-primary {
+  background-color: #28a745;
+  border-color: #28a745;
+  padding: 15px 30px;
+  font-size: 1.25rem;
+  border-radius: 8px;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #218838;
+}
+
+/* Features Section */
+.features {
+  background-color: #f8f9fa;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.feature {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.feature h3 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.feature p {
+  font-size: 1.125rem;
+  color: #555;
+}
+
+/* Venue Preview Section */
+.venue-preview {
+  background-color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.venue-preview h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+
+.venue-images {
+  display: flex;
+  justify-content: space-around;
+}
+
+.venue-image {
+  width: 30%;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.venue-image:hover {
+  transform: scale(1.05);
+}
+
+.venue-title {
+  font-size: 1.5rem;
+  color: #007bff;
+  margin-top: 20px;
+}

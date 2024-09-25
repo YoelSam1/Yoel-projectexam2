@@ -1,0 +1,88 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Flexbox layout for body to ensure footer is at the bottom */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full viewport height */
+}
+
+/* Ensures the #root element takes up the remaining space */
+#root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Flexbox layout for the main content area */
+main {
+  flex: 1;
+}
+
+/* Profile avatar style */
+.profile-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; /* Ensures the image is circular */
+  background-color: grey; /* Background color around the avatar */
+}
+
+/* Footer Styles */
+.footer {
+  background-color: #343a40; /* Dark background color */
+  color: #ffffff; /* White text color */
+  padding: 2rem 0; /* Vertical padding */
+  border-top: 1px solid #474d53; /* Light border at the top of the footer */
+}
+
+.footer h5 {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.footer p {
+  margin-bottom: 0.5rem;
+}
+
+.social-media {
+  margin-top: 1rem;
+}
+
+.social-icon {
+  color: #ffffff; /* White color for icons */
+  margin: 0 10px;
+  font-size: 1.5rem; /* Icon size */
+  transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+  color: #d1d1d1; /* Light grey color on hover */
+}
+
+
+/* profile styles */
+.avatar {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.custom-card {
+  max-width: 250px;
+}
+
+
+
+/* Footer styles */
+footer {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  text-align: center;
+  border-top: 1px solid #ddd;
+}
+
