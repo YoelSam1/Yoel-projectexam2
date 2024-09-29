@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; 
 import '../Assets/Custom-style/Home.css';
 
 const Home = () => {
@@ -7,8 +8,8 @@ const Home = () => {
       <header className="hero">
         <div className="hero-content">
           <h1 className="hero-title">Welcome to Holidaze</h1>
-          <p className="hero-subtitle">Discover global venues and book your dream Hotel.</p>
-          <a href="/venuelist" className="btn btn-primary btn-lg">View Venues</a>
+          <p className="hero-subtitle">Discover global venues and book your dream hotel.</p>
+          <Link to="/venuelist" className="btn btn-primary btn-lg">View Venues</Link> 
         </div>
       </header>
 
@@ -31,8 +32,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-
     </div>
   );
 };
