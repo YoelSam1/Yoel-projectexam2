@@ -1,6 +1,6 @@
 # Holidaze - Project-Exam-2
 
-![image](./src/Assets/Custom-style/Yoel-projectexam2)
+![image](./src/Assets/images/Yoel-projectexam2.png)
 
 ## Introduction
 A newly launched accommodation booking site called Holidaze, is an application that is used to rent a house for short-time. 
