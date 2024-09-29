@@ -42,7 +42,8 @@ const Login = () => {
       setSuccess('Login successful!');
       navigate('/');
     } catch (error) {
-      setError(error.message);
+      // Update the error message
+      setError("Login failed. Please check your credentials and try again.");
     }
   };
 
@@ -62,6 +63,8 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
+                pattern=".+@stud\.noroff\.no$"
+                title="Email must be a valid @stud.noroff.no"
                 required
               />
             </Form.Group>

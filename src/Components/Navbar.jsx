@@ -48,11 +48,25 @@ const NavbarComponent = () => {
               <Nav.Link as={NavLink} to="/my-bookings">My Bookings</Nav.Link>
             )}
           </Nav>
-          <Nav className="d-flex flex-nowrap align-items-center">
+          <Nav className="d-flex flex-column flex-lg-row align-items-center">
             {!user ? (
               <>
-                <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
-                <Nav.Link as={NavLink} to="/register">Register</Nav.Link>
+                <Button 
+                  as={NavLink} 
+                  to="/login" 
+                  variant="outline-light" 
+                  className="mb-2 mb-lg-0 me-0 me-lg-2"
+                >
+                  Login
+                </Button>
+                <Button 
+                  as={NavLink} 
+                  to="/register" 
+                  variant="outline-light" 
+                  className="mb-2 mb-lg-0"
+                >
+                  Register
+                </Button>
               </>
             ) : (
               <>

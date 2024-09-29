@@ -25,7 +25,7 @@ const Footer = () => {
         </Row>
         <Row>
           <Col className="text-center mt-3">
-            <p className="mb-0">© 2024 Booking Site. All Rights Reserved.</p>
+            <p className="mb-0">© 2024 Holidaze-Noroff. All Rights Reserved.</p>
           </Col>
         </Row>
       </Container>

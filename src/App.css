@@ -77,6 +77,23 @@ main {
 }
 
 
+/* search-width styles */
+.search-width {
+  width: 80%;
+  max-width: 400px;
+}
+
+/* venuedetail styles */
+.venuecard1 {
+  height: 200px; 
+  object-fit: cover; 
+}
+
+.venuecard2 {
+  max-height: 400px; 
+  object-fit: cover; 
+}
+
 
 /* Footer styles */
 footer {

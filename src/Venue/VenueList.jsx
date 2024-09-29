@@ -4,6 +4,7 @@ import axios from 'axios';
 import { API_BASE_URL } from '../BaseURL/api';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { debounce } from 'lodash';
+import defaultImage from '../Assets/images/Sun.png';
 
 const VenueList = () => {
   const [venues, setVenues] = useState([]);
@@ -20,11 +21,16 @@ const VenueList = () => {
     };
 
     fetchVenues();
+
+    // Preload the default image
+    const preloadImage = new Image();
+    preloadImage.src = defaultImage;
+
   }, []);
 
   const debouncedSearch = debounce((query) => {
     setSearchQuery(query);
-  }, 300); 
+  }, 300);
 
   const handleSearch = (event) => {
     debouncedSearch(event.target.value);
@@ -37,13 +43,17 @@ const VenueList = () => {
   return (
     <Container>
       <Row className="mb-4">
-        <Col>
-          <h1>Venues</h1>
-          <Form.Control
-            type="text"
-            placeholder="Search for a venue..."
-            onChange={handleSearch}
-          />
+        <Col className="text-center mt-4">
+          <h1>Check out our venues below</h1>
+          <Form.Group controlId="search">
+            <Form.Control
+              type="text"
+              placeholder="Search for a venue..."
+              onChange={handleSearch}
+              className="mx-auto search-width mt-5"
+            />
+          </Form.Group>
+          <hr className="my-4 mt-5" />
         </Col>
       </Row>  
       <Row>
@@ -52,9 +62,12 @@ const VenueList = () => {
             <Card>
               <Card.Img
                 variant="top"
-                src={venue.media[0]}
-                style={{ height: '200px', objectFit: 'cover' }}
-                onError={(e) => (e.target.src = 'default-image-url.jpg')}
+                src={venue.media.length > 0 ? venue.media[0] : defaultImage}
+                className='venuecard1'
+                onError={(e) => {
+                  e.target.src = defaultImage; 
+                  e.target.alt = 'Default Image'; 
+                }}
               />
               <Card.Body>
                 <Card.Title>{venue.name}</Card.Title>

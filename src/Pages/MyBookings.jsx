@@ -92,7 +92,7 @@ const MyBookings = () => {
             <Form.Label>Guests</Form.Label>
             <Form.Control type="number" name="guests" defaultValue={booking.guests} min="1" required />
           </Form.Group>
-          <Button variant="primary" type="submit" className="mt-3">
+          <Button variant="success" type="submit" className="mt-3">
             Update
           </Button>
           <Button variant="secondary" onClick={() => setEditBooking(null)} className="mt-3 ms-2">
@@ -117,8 +117,8 @@ const MyBookings = () => {
                 <strong>Created:</strong> {new Date(booking.created).toLocaleDateString()}<br />
                 <strong>Updated:</strong> {new Date(booking.updated).toLocaleDateString()}
               </Card.Text>
-              <Button variant="warning" onClick={() => setEditBooking(booking)} className="me-2">
-                Edit
+              <Button variant="success" onClick={() => setEditBooking(booking)} className="me-2">
+                Update
               </Button>
               <Button variant="danger" onClick={() => setDeleteId(booking.id)}>
                 Delete

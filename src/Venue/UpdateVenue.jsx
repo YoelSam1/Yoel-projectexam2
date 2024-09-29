@@ -13,7 +13,8 @@ const UpdateVenue = () => {
     name: '',
     description: '',
     price: '',
-    maxGuests: ''
+    maxGuests: '',
+    media: [],
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -36,7 +37,16 @@ const UpdateVenue = () => {
     const { name, value } = e.target;
     setVenue((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
+    }));
+  };
+
+  const handleMediaChange = (index, value) => {
+    const updatedMedia = [...venue.media];
+    updatedMedia[index] = value;
+    setVenue((prev) => ({
+      ...prev,
+      media: updatedMedia,
     }));
   };
 
@@ -56,6 +66,7 @@ const UpdateVenue = () => {
       const formattedPrice = parseFloat(venue.price);
       const formattedMaxGuests = parseInt(venue.maxGuests, 10);
 
+      // Validation
       if (isNaN(formattedPrice) || formattedPrice <= 0) {
         throw new Error('Price must be a valid positive number.');
       }
@@ -63,14 +74,16 @@ const UpdateVenue = () => {
         throw new Error('Max Guests must be a valid positive number.');
       }
 
+      // Update venue
       await axios.put(`${API_BASE_URL}/holidaze/venues/${id}`, {
         name: venue.name,
         description: venue.description,
+        media: venue.media.filter((url) => url.trim() !== ''),
         price: formattedPrice,
-        maxGuests: formattedMaxGuests
+        maxGuests: formattedMaxGuests,
       }, {
         headers: {
-          Authorization: `Bearer ${user.accessToken}`, 
+          Authorization: `Bearer ${user.accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -88,62 +101,90 @@ const UpdateVenue = () => {
 
   return (
     <div className="container mt-4">
-      <h2>Update Venue</h2>
+      <h2 className="text-center mb-4">Update Venue</h2>
       {loading && <p>Loading...</p>}
       {error && <div className="alert alert-danger">{error}</div>}
       {success && <div className="alert alert-success">{success}</div>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Venue Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            className="form-control"
-            value={venue.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="description">Description</label>
-          <textarea
-            id="description"
-            name="description"
-            className="form-control"
-            value={venue.description}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="price">Price</label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            className="form-control"
-            value={venue.price}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="maxGuests">Max Guests</label>
-          <input
-            type="number"
-            id="maxGuests"
-            name="maxGuests"
-            className="form-control"
-            value={venue.maxGuests}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary" disabled={loading}>
-          Update Venue
-        </button>
-      </form>
+      
+      {venue.name ? (
+        <form onSubmit={handleSubmit} className="bg-light p-4 rounded">
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">Venue Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              className="form-control"
+              value={venue.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="description" className="form-label">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              className="form-control"
+              value={venue.description}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="row mb-3">
+            <div className="col-md-6">
+              <label htmlFor="price" className="form-label">Price</label>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                className="form-control"
+                value={venue.price}
+                onChange={handleChange}
+                min="0"
+                required
+              />
+            </div>
+            <div className="col-md-6">
+              <label htmlFor="maxGuests" className="form-label">Max Guests</label>
+              <input
+                type="number"
+                id="maxGuests"
+                name="maxGuests"
+                className="form-control"
+                value={venue.maxGuests}
+                onChange={handleChange}
+                min="1"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="media" className="form-label">Media URLs</label>
+            {venue.media.map((mediaUrl, index) => (
+              <div key={index} className="input-group mb-2">
+                <input
+                  type="url"
+                  className="form-control"
+                  value={mediaUrl}
+                  onChange={(e) => handleMediaChange(index, e.target.value)}
+                  placeholder="http://example.com/image.jpg"
+                  title="Please enter a valid URL"
+                  required
+                />
+              </div>
+            ))}
+          </div>
+
+          <button type="submit" className="btn btn-success d-block mx-auto" disabled={loading}>
+            Update Venue
+          </button>
+        </form>
+      ) : (
+        <p>Loading venue details...</p>
+      )}
     </div>
   );
 };

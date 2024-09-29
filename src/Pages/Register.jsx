@@ -22,20 +22,6 @@ const Register = () => {
     });
   };
 
-  const isValidEmail = (email) => {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@(stud\.)?noroff.no$/;
-    return emailPattern.test(email);
-  };
-
-  const isValidName = (name) => {
-    const namePattern = /^[a-zA-Z0-9_]+$/; 
-    return namePattern.test(name);
-  };
-
-  const isValidPassword = (password) => {
-    return password.length >= 8;
-  };
-
   const isValidURL = (url) => {
     try {
       new URL(url);
@@ -50,24 +36,6 @@ const Register = () => {
     setError(null); 
     setSuccess(null); 
 
-    // Validate name
-    if (!isValidName(formData.name)) {
-      setError('Name can only contain letters, numbers, and underscores (_).');
-      return;
-    }
-
-    // Validate email
-    if (!isValidEmail(formData.email)) {
-      setError('Email must be a valid stud.noroff.no or noroff.no address.');
-      return;
-    }
-
-    // Validate password
-    if (!isValidPassword(formData.password)) {
-      setError('Password must be at least 8 characters long.');
-      return;
-    }
-
     // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match.');
@@ -81,7 +49,7 @@ const Register = () => {
     }
 
     try {
-      await registerUser(formData); // Removed unused 'data' variable
+      await registerUser(formData);
       setSuccess('Registration successful!');
       setFormData({
         name: '',
@@ -109,6 +77,8 @@ const Register = () => {
               <Form.Control
                 type="text"
                 name="name"
+                pattern="[a-zA-Z0-9_]+"
+                title="Invalid name. Only letters, numbers, and underscores are allowed."
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Enter your name"
@@ -124,6 +94,8 @@ const Register = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
+                pattern=".+@stud\.noroff\.no$"
+                title="Email must be a valid @stud.noroff.no"
                 required
               />
             </Form.Group>
@@ -133,6 +105,7 @@ const Register = () => {
               <Form.Control
                 type="password"
                 name="password"
+                minLength="8"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter your password"

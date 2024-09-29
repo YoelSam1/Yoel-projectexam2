@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# Holidaze - Project-Exam-2
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![image](./src/Assets/Custom-style/Yoel-projectexam2)
 
-## Available Scripts
+## Introduction
+A newly launched accommodation booking site called Holidaze, is an application that is used to rent a house for short-time. 
 
-In the project directory, you can run:
+---
+## Description
+Project Overview
+The Holidaze project aims to develop a modern front end for an accommodation booking site. The goal is to showcase the skills acquired over two years as a Front-End Development student by creating an intuitive user experience for both customers and venue managers.
 
-### `npm start`
+The application will feature functionalities such as viewing and searching for venues, checking availability through a calendar, booking accommodations, and managing venue registrations. This project solely focuses on the front-end aspect, utilizing the Noroff API documentation for integration.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## User Stories
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The Following User Stories requirements in the form:
 
-### `npm test`
+1. A user may view a list of Venues
+2. A user may search for a specific Venue
+3. A user may view a specific Venue page by id
+4. A user may view a calendar with available dates for a Venue
+5. A user with a stud.noroff.no email may register as a customer
+6. A registered customer may create a booking at a Venue
+7. A registered customer may view their upcoming bookings
+8. A user with a stud.noroff.no email may register as a Venue manager
+9.  A registered Venue manager may create a Venue
+10. A registered Venue manager may update a Venue they manage
+11. A registered Venue manager may delete a Venue they manage
+12. A registered Venue manager may view bookings for a Venue they manage
+13. A registered user may login
+14. A registered user may update their avatar
+15. A registered user may logout
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tech Stacks 
+- Used in this project 👇
 
-### `npm run build`
+1. Trello: Used to plan and manage the project tasks.
+2. Figma: Used to designing the UIs.
+3. Bootstrap: Tool used in staging and building this project.
+4. React: Used in building the interactive UIs.
+6. Netlify: Used to Host the project
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+##  How to Install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Follow these steps to set up and run the project: 👇
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone the Repository: 👉 git clone https://github.com/YoelSam1/Yoel-projectexam2.git
 
-### `npm run eject`
+2. Navigate to the root directory of the project using the below command:
+- cd Yoel-projectexam2
+3. Install the project dependencies using:
+- npm install
+4.  To build the app use the following command:
+- npm run build
+5. To view the build version the app in the development mode, use this command:
+- npm start
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Once done with the following steps , the project should be able to run on http://localhost:3000

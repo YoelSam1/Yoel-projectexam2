@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../Authentication/AuthContext';
 import axios from 'axios';
 import { API_BASE_URL } from '../BaseURL/api';
-
-// URL of the default avatar image
-const defaultAvatarUrl = 'https://icons.veryicon.com/png/o/miscellaneous/common-icons-31/default-avatar-2.png';
+import defaultImage from '../Assets/images/Sun.png'; 
+import defaultAvatar from '../Assets/images/default-avatar.png'; 
 
 const Profile = () => {
   const { user } = useAuth();
@@ -14,7 +13,6 @@ const Profile = () => {
   const [newAvatar, setNewAvatar] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user && user.accessToken) {
@@ -34,9 +32,14 @@ const Profile = () => {
           const userCreatedVenues = venuesResponse.data.filter(venue => venue.owner && venue.owner.email === user.email);
           setVenues(userCreatedVenues);
         } catch (err) {
-          setError('Failed to fetch profile or venues');
-        } finally {
-          setLoading(false);
+          // Improved error handling
+          if (err.response) {
+            setError(err.response.data.message || 'Failed to fetch profile or venues.');
+          } else if (err.request) {
+            setError('No response received from the server.');
+          } else {
+            setError('Error: ' + err.message);
+          }
         }
       };
 
@@ -46,11 +49,16 @@ const Profile = () => {
 
   const handleAvatarUpdate = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError(null);
     setSuccess(null);
   
     try {
+      // Validate URL
+      const urlPattern = new RegExp('^(http|https)://');
+      if (!urlPattern.test(newAvatar)) {
+        throw new Error('Please enter a valid URL.');
+      }
+
       // Update the avatar URL
       await axios.put(`${API_BASE_URL}/holidaze/profiles/${user.name}/media`, {
         avatar: newAvatar,
@@ -61,22 +69,24 @@ const Profile = () => {
         },
       });
   
-      // Update the profile state with the new avatar URL
       setProfile(prevProfile => ({
         ...prevProfile,
         avatar: newAvatar,
       }));
   
-      // Update the success message
       setSuccess('Avatar updated successfully.');
       setNewAvatar('');
     } catch (err) {
-      setError('Failed to update avatar.');
-    } finally {
-      setLoading(false);
+      // Improved error handling for avatar update
+      if (err.response) {
+        setError(err.response.data.message || 'Failed to update avatar.');
+      } else if (err.request) {
+        setError('No response received from the server.');
+      } else {
+        setError('Error: ' + err.message);
+      }
     }
   };
-  
 
   const handleDelete = async (venueId) => {
     try {
@@ -85,12 +95,16 @@ const Profile = () => {
       });
       setVenues(venues.filter(venue => venue.id !== venueId));
     } catch (err) {
-      setError('Failed to delete venue');
+      // Improved error handling for delete
+      if (err.response) {
+        setError(err.response.data.message || 'Failed to delete venue');
+      } else if (err.request) {
+        setError('No response received from the server.');
+      } else {
+        setError('Error: ' + err.message);
+      }
     }
   };
-
-  if (loading) return <p className="text-center">Loading...</p>;
-  if (error) return <p className="text-center text-danger">{error}</p>;
 
   return (
     <div className="container mt-5">
@@ -101,7 +115,7 @@ const Profile = () => {
         <div className="row">
           <div className="col-12 text-center mb-4">
             <img
-              src={profile.avatar || defaultAvatarUrl}
+              src={profile.avatar || defaultAvatar} 
               alt="Avatar"
               className="img-fluid rounded-circle mx-auto d-block avatar"
             />
@@ -128,7 +142,7 @@ const Profile = () => {
                 placeholder="Enter new avatar URL"
                 required
               />
-              <button type="submit" className="btn btn-success w-100" disabled={loading}>
+              <button type="submit" className="btn btn-success w-100">
                 Update Avatar
               </button>
               {success && <div className="alert alert-success mt-2">{success}</div>}
@@ -138,7 +152,7 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* Horizontal Line */}
+      {/* Horizontal Line */} 
       <hr /> 
 
       {/* Create Venue Button */}
@@ -156,9 +170,13 @@ const Profile = () => {
             <div key={venue.id} className="col-12 col-sm-6 col-md-4 mb-4">
               <div className="card">
                 <img
-                  src={venue.media[0] || 'https://via.placeholder.com/400x200'}
-                  className="card-img-top"
+                  src={venue.media.length > 0 ? venue.media[0] : defaultImage} 
+                  className="card-img-top venuecard1"
                   alt={venue.name}
+                  onError={(e) => {
+                    e.target.src = defaultImage;
+                    e.target.alt = 'Default Image';
+                  }}
                 />
                 <div className="card-body">
                   <h5 className="card-title">{venue.name}</h5>
@@ -173,7 +191,7 @@ const Profile = () => {
                       onClick={() => handleDelete(venue.id)}
                       className="btn btn-danger"
                     >
-                      Delete
+                      Delete  
                     </button>
                   </div>
                 </div>

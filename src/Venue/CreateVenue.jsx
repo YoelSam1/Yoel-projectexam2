@@ -5,20 +5,30 @@ import { API_BASE_URL } from '../BaseURL/api';
 
 const CreateVenue = () => {
   const { user } = useAuth();
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [media, setMedia] = useState('');
-  const [price, setPrice] = useState('');
-  const [maxGuests, setMaxGuests] = useState('');
-  const [rating, setRating] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [zip, setZip] = useState('');
-  const [country, setCountry] = useState('');
-  const [continent, setContinent] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    media: '',
+    price: '',
+    maxGuests: '',
+    rating: '',
+    address: '',
+    city: '',
+    zip: '',
+    country: '',
+    continent: '',
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,12 +42,6 @@ const CreateVenue = () => {
       return;
     }
 
-    if (!name || !description || !price || !maxGuests || !address || !city || !zip || !country || !continent) {
-      setError("Please fill in all required fields.");
-      setLoading(false);
-      return;
-    }
-
     const config = {
       headers: {
         Authorization: `Bearer ${user.accessToken}`,
@@ -46,39 +50,42 @@ const CreateVenue = () => {
     };
 
     try {
-      await axios.post(
-        `${API_BASE_URL}/holidaze/venues`,
-        {
-          name,
-          description,
-          media: [media],
-          price: parseFloat(price),
-          maxGuests: parseInt(maxGuests),
-          rating: parseFloat(rating),
-          location: {
-            address,
-            city,
-            zip,
-            country,
-            continent,
-          },
+      const venueData = {
+        name: formData.name,
+        description: formData.description,
+        price: parseFloat(formData.price),
+        maxGuests: parseInt(formData.maxGuests),
+        rating: formData.rating ? parseFloat(formData.rating) : null,
+        media: formData.media ? [formData.media] : undefined,
+        location: {
+          address: formData.address,
+          city: formData.city,
+          zip: formData.zip,
+          country: formData.country,
+          continent: formData.continent,
         },
-        config
-      );
+      };
+
+      await axios.post(`${API_BASE_URL}/holidaze/venues`, venueData, config);
       setSuccess("Venue created successfully!");
-      setName('');
-      setDescription('');
-      setMedia('');
-      setPrice('');
-      setMaxGuests('');
-      setRating('');
-      setAddress('');
-      setCity('');
-      setZip('');
-      setCountry('');
-      setContinent('');
+      // Clear form fields after submission
+      setFormData({
+        name: '',
+        description: '',
+        media: '',
+        price: '',
+        maxGuests: '',
+        rating: '',
+        address: '',
+        city: '',
+        zip: '',
+        country: '',
+        continent: '',
+      });
     } catch (error) {
-      setError(`Error creating venue: ${error.response?.data.message || error.message}`);
+      // Improved error handling
+      const errorMessage = error.response?.data?.message || error.message || "An unexpected error occurred.";
+      setError(`Error creating venue: ${errorMessage}`);
     } finally {
       setLoading(false);
     }
@@ -88,7 +95,7 @@ const CreateVenue = () => {
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-8 col-lg-6">
-          <div className="p-4 bg-light rounded"> 
+          <div className="p-4 bg-light rounded">
             <h1 className="text-center mb-4">Create a New Venue</h1>
             {error && <div className="alert alert-danger">{error}</div>}
             {success && <div className="alert alert-success">{success}</div>}
@@ -99,8 +106,10 @@ const CreateVenue = () => {
                   type="text"
                   id="name"
                   className="form-control"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  pattern="[a-zA-Z0-9_]+"
+                  title="Invalid name. Only letters, numbers, and underscores are allowed."
+                  value={formData.name}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -110,10 +119,11 @@ const CreateVenue = () => {
                   type="number"
                   id="price"
                   className="form-control"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
+                  value={formData.price}
+                  onChange={handleChange}
                   required
-                  step="0.01"
+                  step="1"
+                  min="1"
                 />
               </div>
               <div className="col-md-6">
@@ -122,8 +132,8 @@ const CreateVenue = () => {
                   type="number"
                   id="maxGuests"
                   className="form-control"
-                  value={maxGuests}
-                  onChange={(e) => setMaxGuests(e.target.value)}
+                  value={formData.maxGuests}
+                  onChange={handleChange}
                   required
                   min="1"
                 />
@@ -134,11 +144,11 @@ const CreateVenue = () => {
                   type="number"
                   id="rating"
                   className="form-control"
-                  value={rating}
-                  onChange={(e) => setRating(e.target.value)}
-                  step="0.1"
+                  value={formData.rating}
+                  onChange={handleChange}
+                  step="1"
                   max="5"
-                  min="0"
+                  min="1"
                 />
               </div>
               <div className="col-md-12">
@@ -146,8 +156,8 @@ const CreateVenue = () => {
                 <textarea
                   id="description"
                   className="form-control"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  value={formData.description}
+                  onChange={handleChange}
                   required
                   rows="4"
                 />
@@ -158,9 +168,11 @@ const CreateVenue = () => {
                   type="url"
                   id="media"
                   className="form-control"
-                  value={media}
-                  onChange={(e) => setMedia(e.target.value)}
+                  value={formData.media}
+                  onChange={handleChange}
                   placeholder="http://example.com/image.jpg"
+                  title="Please enter a valid URL"
+                  required
                 />
               </div>
 
@@ -170,9 +182,11 @@ const CreateVenue = () => {
                 <input
                   type="text"
                   id="address"
+                  pattern="[a-zA-Z0-9_]+"
+                  title="Invalid address. Only letters, numbers, and underscores are allowed."
                   className="form-control"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  value={formData.address}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -181,21 +195,24 @@ const CreateVenue = () => {
                 <input
                   type="text"
                   id="city"
+                  pattern="[A-Za-z\s\-']+"
+                  title="Invalid city name. Only letters, spaces, hyphens, and apostrophes are allowed."
                   className="form-control"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
+                  value={formData.city}
+                  onChange={handleChange}
                   required
                 />
               </div>
               <div className="col-md-6">
                 <label htmlFor="zip" className="form-label">Zip Code</label>
                 <input
-                  type="text"
+                  type="number"
                   id="zip"
                   className="form-control"
-                  value={zip}
-                  onChange={(e) => setZip(e.target.value)}
-                  required
+                  value={formData.zip}
+                  onChange={handleChange}
+                  step="1"
+                  min="1"
                 />
               </div>
               <div className="col-md-6">
@@ -203,9 +220,11 @@ const CreateVenue = () => {
                 <input
                   type="text"
                   id="country"
+                  pattern="[A-Za-z\s\-']+"
+                  title="Invalid continent name. Only letters, spaces, hyphens, and apostrophes are allowed."
                   className="form-control"
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
+                  value={formData.country}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -214,9 +233,11 @@ const CreateVenue = () => {
                 <input
                   type="text"
                   id="continent"
+                  pattern="[A-Za-z\s\-']+"
+                  title="Invalid continent name. Only letters, spaces, hyphens, and apostrophes are allowed."
                   className="form-control"
-                  value={continent}
-                  onChange={(e) => setContinent(e.target.value)}
+                  value={formData.continent}
+                  onChange={handleChange}
                   required
                 />
               </div>
