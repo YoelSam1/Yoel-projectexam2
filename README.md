@@ -45,15 +45,30 @@ The Following User Stories requirements in the form:
 
 Follow these steps to set up and run the project: 👇
 
-1. Clone the Repository: 👉 git clone https://github.com/YoelSam1/Yoel-projectexam2.git
+1. Clone the Repository: 
+```bash
+git clone https://github.com/YoelSam1/Yoel-projectexam2.git
+```
 
 2. Navigate to the root directory of the project using the below command:
-- cd Yoel-projectexam2
+  `cd Yoel-projectexam2`
 3. Install the project dependencies using:
-- npm install
+  `npm install`
 4.  To build the app use the following command:
-- npm run build
+  `npm run build`
 5. To view the build version the app in the development mode, use this command:
-- npm start
+    `npm start`
 
 Once done with the following steps , the project should be able to run on http://localhost:3000
+
+
+## Contributing
+
+If you'd like to contribute to this project, please follow these steps:
+
+- Fork the repository.
+
+1. Create a new branch (git checkout -b feature/your-feature-name).
+2. Make your changes and commit them (git commit -m 'Add some feature').
+3. Push to the branch (git push origin feature/your-feature-name).
+4. Open a Pull Request for your changes to be reviewed.
